@@ -38,13 +38,12 @@
 
 .loading-image,
 .loading-bar {
-  background: linear-gradient(140deg, #dcdcdc, #c7c7c7, #dcdcdc, #c7c7c7, #dcdcdc, #c7c7c7, #dcdcdc, #c7c7c7);
+  background: linear-gradient(140deg, #dcdcdc, #ecf0f1, #dcdcdc, #ecf0f1, #dcdcdc, #ecf0f1, #dcdcdc, #ecf0f1);
   background-size: 600% 600%;
-
-  animation: AnimationName 11s linear infinite;
+  animation: AnimateLoading 11s linear infinite;
 }
 
-@keyframes AnimationName {
+@keyframes AnimateLoading {
   0% {
     background-position: 5% 0%;
   }

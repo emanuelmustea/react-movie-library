@@ -50,7 +50,13 @@ export default class Loading extends Component {
     return cardsElements;
   }
   render() {
-    const { type } = this.props;
-    return <div className="loading">{type === 'card' ? <div className="row">{this.renderCards()}</div> : <div className="spin" />}</div>;
+    const { type, className, repeat } = this.props;
+    const returnArray = [];
+    let i = 0;
+    do {
+      returnArray.push(type === 'bar' ? <div key={i} className={`loading-bar ${className}`} /> : null);
+      i++;
+    } while (i < repeat);
+    return <div className="loading">{returnArray}</div>;
   }
 }
