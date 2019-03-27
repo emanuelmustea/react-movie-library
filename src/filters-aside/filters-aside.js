@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import MoviesApi from '../api/movies';
+import MoviesService from '../api/moviesService';
 import Loading from '../loading/Loading';
 import '../ui/ui.css';
 
 export default class FiltersAside extends Component {
   constructor() {
     super();
-    this.MoviesApi = new MoviesApi();
-    this.MoviesApi.getGenresList().then(res => this.setState({ genres: res.genres }));
+    MoviesService.getGenresList().then(res => this.setState({ genres: res.genres }));
     this.state = { genres: null };
   }
   render() {
@@ -24,15 +23,10 @@ export default class FiltersAside extends Component {
       <Loading class="full margin" type="bar" repeat="19" />
     );
     return (
-      <aside className="filters" style={{ padding: 30, paddingTop: 110, paddingRight: 0 }}>
+      <aside className="filters" style={{ padding: 30, paddingTop: 10, paddingRight: 0 }}>
         <div className="card">
           <div className="card-head">Filters</div>
           <div className="card-body">{genresList}</div>
-          <div className="card-body">
-            <button className="primary" onClick={this.props.applyFilters}>
-              Save Filters
-            </button>
-          </div>
         </div>
       </aside>
     );

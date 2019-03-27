@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import './Loading.css';
 import '../ui/ui.css';
-import heart from '../../public/img/heart-o.png';
 
 export default class Loading extends Component {
   renderCards() {
     const cardsElements = [];
     for (let i = 0; i < 20; i++) {
       cardsElements.push(
-        <div className="col five">
+        <div key={i} className="col five">
           <div className="card hoverable">
             <div className="card-head image">
               <div className="loading-image" />
@@ -54,6 +53,13 @@ export default class Loading extends Component {
     const returnArray = [];
     let i = 0;
     do {
+      returnArray.push(
+        type === 'card' ? (
+          <div key={i} className="row">
+            {this.renderCards()}
+          </div>
+        ) : null
+      );
       returnArray.push(type === 'bar' ? <div key={i} className={`loading-bar ${className}`} /> : null);
       i++;
     } while (i < repeat);
