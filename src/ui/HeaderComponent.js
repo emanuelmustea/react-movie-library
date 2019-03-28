@@ -27,8 +27,6 @@ class Header extends Component {
         </form>
         <div className="nav-menu">
           <Link to="/">List all movies</Link>
-          <Link to="/search/search">By Category</Link>
-          <Link to="/about">About</Link>
         </div>
       </nav>
     );

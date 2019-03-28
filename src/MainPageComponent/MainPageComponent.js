@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import MoviesService from '../api/moviesService';
-import ListAllMovies from '../ListAllMovies/ListAllMovies';
-import FiltersAside from '../filters-aside/filters-aside';
+import ListAllMovies from '../ListAllMoviesComponent/ListAllMoviesComponent';
+import FiltersAside from '../FiltersAsideComponent/FiltersAsideComponent';
 
 export default class MainPage extends Component {
   constructor() {

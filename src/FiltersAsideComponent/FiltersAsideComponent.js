@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MoviesService from '../api/moviesService';
-import Loading from '../loading/Loading';
+import Loading from '../LoadingComponent/LoadingComponent';
 import '../ui/ui.css';
 
 export default class FiltersAside extends Component {

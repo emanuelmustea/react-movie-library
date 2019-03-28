@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import MovieOverview from '../movie/movie-overview';
-import Loading from '../loading/Loading';
+import MovieOverview from '../MovieOverviewComponent/MovieOverviewComponent';
+import Loading from '../LoadingComponent/LoadingComponent';
 import '../ui/ui.css';
 
 export default class ListAllMovies extends Component {

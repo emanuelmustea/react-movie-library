@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import MoviesService from '../api/moviesService';
 import '../ui/ui.css';
-import ListAllMovies from '../ListAllMovies/ListAllMovies';
+import ListAllMovies from '../ListAllMoviesComponent/ListAllMoviesComponent';
 
 class SearchComponent extends Component {
   constructor() {
