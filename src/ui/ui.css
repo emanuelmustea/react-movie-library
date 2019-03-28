@@ -44,7 +44,6 @@ input,
 button {
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
   touch-action: manipulation;
-  border-radius: 4px;
   color: rgba(0, 0, 0, 0.65);
   background-color: #fff;
   border: 1px solid transparent;
@@ -64,7 +63,46 @@ button.primary {
 button.primary:hover {
   background: #409fff;
 }
-.search-bar > button:hover {
+.search-bar {
+  position: relative;
+}
+.search-bar > div.suggestions {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 100%;
+  background: white;
+  margin: -30px 30px 0px 30px;
+  padding-top: 15px;
+  border: 1px solid transparent;
+  border-color: #d9d9d9;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
+  z-index: 0;
+  border-radius: 0 0 15px 15px;
+  display: none;
+  overflow: hidden;
+}
+.search-bar > input:focus + div.suggestions {
+  display: block;
+}
+.search-bar > div.suggestions a {
+  display: flex;
+  flex-direction: row;
+  padding: 10px 10px;
+  cursor: pointer;
+  transition: all 225ms;
+}
+.search-bar > div.suggestions a:hover {
+  background: #fafafa;
+}
+.search-bar > div.suggestions a img {
+  height: 100px;
+}
+.search-bar > div.suggestions a div {
+  line-height: 20px;
+  padding: 10px;
+}
+.search-bar > div.suggestions a .search-bar > button:hover {
   color: #40a9ff;
   border-color: #40a9ff;
 }
@@ -76,11 +114,13 @@ button.primary:hover {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
   width: 100%;
+  z-index: 1;
 }
 .search-bar > button {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
   cursor: pointer;
+  z-index: 1;
 }
 nav > .nav-menu > a {
   display: inline-block;

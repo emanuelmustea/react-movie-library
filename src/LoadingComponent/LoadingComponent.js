@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './Loading.css';
 import '../ui/ui.css';
 
-export default class Loading extends Component {
-  renderCards() {
+export default function Loading(props) {
+  const renderCards = () => {
     const cardsElements = [];
     for (let i = 0; i < 20; i++) {
       cardsElements.push(
@@ -47,22 +47,20 @@ export default class Loading extends Component {
       );
     }
     return cardsElements;
-  }
-  render() {
-    const { type, className, repeat } = this.props;
-    const returnArray = [];
-    let i = 0;
-    do {
-      returnArray.push(
-        type === 'card' ? (
-          <div key={i} className="row">
-            {this.renderCards()}
-          </div>
-        ) : null
-      );
-      returnArray.push(type === 'bar' ? <div key={i} className={`loading-bar ${className}`} /> : null);
-      i++;
-    } while (i < repeat);
-    return <div className="loading">{returnArray}</div>;
-  }
+  };
+  const { type, className, repeat } = props;
+  const returnArray = [];
+  let i = 0;
+  do {
+    returnArray.push(
+      type === 'card' ? (
+        <div key={i} className="row">
+          {renderCards()}
+        </div>
+      ) : null
+    );
+    returnArray.push(type === 'bar' ? <div key={i} className={`loading-bar ${className}`} /> : null);
+    i++;
+  } while (i < repeat);
+  return <div className="loading">{returnArray}</div>;
 }

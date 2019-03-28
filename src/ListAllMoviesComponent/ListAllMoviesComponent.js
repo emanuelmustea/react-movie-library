@@ -3,38 +3,37 @@ import MovieOverview from '../MovieOverviewComponent/MovieOverviewComponent';
 import Loading from '../LoadingComponent/LoadingComponent';
 import '../ui/ui.css';
 
+const DISTANCE_FROM_BOTTOM = 100;
+const isAtTheBottomOfThePage = () => {
+  const bodyHeight = document.body.scrollHeight;
+  const scrollPosition = window.pageYOffset;
+  const windowHeight = window.innerHeight;
+  return bodyHeight < scrollPosition + windowHeight + DISTANCE_FROM_BOTTOM;
+};
 export default class ListAllMovies extends Component {
   constructor() {
     super();
     this.state = { movies: [], isLoading: true, isAtTheEnd: false };
-    this.loadMoviesIfAtTheBottom = this.loadMoviesIfAtTheBottom.bind(this);
+    this.triggerParentIfAtBottom = this.triggerParentIfAtBottom.bind(this);
   }
-  isAtTheBottomOfThePage() {
-    const bodyHeight = document.body.scrollHeight;
-    const scrollPosition = window.pageYOffset;
-    const windowHeight = window.innerHeight;
-    return bodyHeight < scrollPosition + windowHeight + 100;
-  }
-
-  updateMovies(state) {
-    const { movies, currentPage } = state;
-    if (currentPage == 1) {
+  updateMovies(movieData) {
+    const { movies, currentPage } = movieData;
+    if (currentPage === 1) {
       this.setState({ movies: movies });
     } else {
       this.setState({ movies: [...this.state.movies, ...movies] });
     }
   }
-
-  loadMoviesIfAtTheBottom() {
-    if (this.isAtTheBottomOfThePage() && this.state.movies.length > 0) {
+  triggerParentIfAtBottom() {
+    if (isAtTheBottomOfThePage() && this.state.movies.length > 0) {
       this.props.isAtTheBottom();
     }
   }
   componentDidMount() {
-    document.addEventListener('scroll', this.loadMoviesIfAtTheBottom);
+    document.addEventListener('scroll', this.triggerParentIfAtBottom);
   }
   componentWillUnmount() {
-    document.removeEventListener('scroll', this.loadMoviesIfAtTheBottom);
+    document.removeEventListener('scroll', this.triggerParentIfAtBottom);
   }
   render() {
     const moviesCards = this.state.movies.map((movieData, index) => <MovieOverview key={index} movieData={movieData} className="col five" />);
