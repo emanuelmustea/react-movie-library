@@ -12,5 +12,8 @@ class MoviesService {
     const readyQuery = encodeURI(query);
     return fetch(`http://${SERVER_IP}:${PORT}/search?page=${page}&limit=${limit}&query=${readyQuery}`).then(res => res.json());
   }
+  getMovieData(id) {
+    return fetch(`http://${SERVER_IP}:${PORT}/movie/${id}`).then(res => res.json());
+  }
 }
 export default new MoviesService();

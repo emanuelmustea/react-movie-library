@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import '../ui/ui.css';
 import heart from '../../public/img/heart-o.png';
 
-export default class MovieOverview extends Component {
+class MovieOverview extends Component {
   render() {
     const { movieData } = this.props;
     const movieSrc = `https://image.tmdb.org/t/p/w500/${movieData.poster_path}`;
     const overview = movieData.overview.substring(0, 200) + '...';
-    const title = movieData.title;
+    const { title, id, vote_count } = movieData;
     const rating = movieData.vote_average;
-    const { vote_count } = movieData;
 
     return (
       <div className={this.props.className}>
-        <div className="card hoverable">
+        <div className="card hoverable" onClick={() => this.props.history.push(`/movie/${id}/${title.split(' ').join('_')}`)}>
           <div className="card-head image">
             <img src={movieSrc} />
           </div>
@@ -39,3 +39,4 @@ export default class MovieOverview extends Component {
     );
   }
 }
+export default withRouter(MovieOverview);

@@ -53,12 +53,13 @@ button {
   padding: 0px 20px;
   transition: all 225ms;
   cursor: pointer;
+  padding: 5px 10px;
 }
 button.primary {
   background: #40a9ff;
   color: #fff;
   border: 0;
-  padding: 5px 0;
+  padding: 5px 10px;
 }
 button.primary:hover {
   background: #409fff;
@@ -81,6 +82,9 @@ button.primary:hover {
   border-radius: 0 0 15px 15px;
   display: none;
   overflow: hidden;
+}
+.search-bar:focus-within > div.suggestions {
+  display: block;
 }
 .search-bar > input:focus + div.suggestions {
   display: block;
@@ -231,6 +235,9 @@ nav > .nav-menu > a:hover {
   padding: 10px;
   display: inline-flex;
   flex-grow: 0;
+}
+.col.grow {
+  flex: 1;
 }
 .col.four {
   flex-basis: 25%;
