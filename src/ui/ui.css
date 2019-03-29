@@ -7,8 +7,10 @@
 body,
 div,
 input,
-button,
-span {
+button {
+  font-size: 14px;
+}
+body {
   font-size: 14px;
 }
 nav {
@@ -242,6 +244,9 @@ nav > .nav-menu > a:hover {
 .col.four {
   flex-basis: 25%;
 }
+.col.three {
+  width: 33.3%;
+}
 .col.five {
   flex-basis: 20%;
 }
@@ -287,4 +292,7 @@ nav > .nav-menu > a:hover {
   font-weight: lighter;
   letter-spacing: 0.5px;
   border-radius: 4px;
+}
+.grey {
+  color: grey;
 }
