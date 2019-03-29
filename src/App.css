@@ -13,3 +13,6 @@
 .column {
   flex-direction: column;
 }
+.no-margin {
+  margin: 0px;
+}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MovieOverview from '../MovieOverviewComponent/MovieOverviewComponent';
-import Loading from '../LoadingComponent/LoadingComponent';
+import LoadingCards from '../LoadingComponent/LoadingCardsComponent';
 import '../ui/ui.css';
 
 const DISTANCE_FROM_BOTTOM = 100;
@@ -40,7 +40,7 @@ export default class ListAllMovies extends Component {
     return (
       <div className="row" style={{ ...this.props.style }}>
         {moviesCards}
-        {this.state.isLoading ? <Loading type="card" /> : null}
+        {this.state.isLoading ? <LoadingCards /> : null}
       </div>
     );
   }
