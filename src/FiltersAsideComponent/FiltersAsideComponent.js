@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MoviesService from '../api/moviesService';
-import Loading from '../LoadingComponent/LoadingComponent';
+import LoadingBars from '../LoadingComponent/LoadingBarsComponent';
 import '../ui/ui.css';
 
 export default class FiltersAside extends Component {
@@ -27,7 +27,7 @@ export default class FiltersAside extends Component {
           <div className="card-head">Filters</div>
           <div className="card-body">
             {genresList.length && genresList}
-            {!genresList.length && <Loading class="full margin" type="bar" repeat="19" />}
+            {!genresList.length && <LoadingBars class="full margin" repeat="19" />}
           </div>
         </div>
       </aside>

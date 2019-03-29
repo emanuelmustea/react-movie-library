@@ -7,8 +7,10 @@
 body,
 div,
 input,
-button,
-span {
+button {
+  font-size: 14px;
+}
+body {
   font-size: 14px;
 }
 nav {
@@ -53,12 +55,13 @@ button {
   padding: 0px 20px;
   transition: all 225ms;
   cursor: pointer;
+  padding: 5px 10px;
 }
 button.primary {
   background: #40a9ff;
   color: #fff;
   border: 0;
-  padding: 5px 0;
+  padding: 5px 10px;
 }
 button.primary:hover {
   background: #409fff;
@@ -81,6 +84,9 @@ button.primary:hover {
   border-radius: 0 0 15px 15px;
   display: none;
   overflow: hidden;
+}
+.search-bar:focus-within > div.suggestions {
+  display: block;
 }
 .search-bar > input:focus + div.suggestions {
   display: block;
@@ -191,6 +197,10 @@ nav > .nav-menu > a:hover {
   margin: 0px;
   margin-bottom: 10px;
 }
+.card .title {
+  width: 100%;
+  flex: auto;
+}
 .card > .card-footer {
   margin-top: auto;
   margin-bottom: 0px;
@@ -232,14 +242,23 @@ nav > .nav-menu > a:hover {
   display: inline-flex;
   flex-grow: 0;
 }
+.col.grow {
+  flex: 1;
+}
 .col.four {
   flex-basis: 25%;
+}
+.col.three {
+  width: 33.3%;
 }
 .col.five {
   flex-basis: 20%;
 }
 .col.six {
   flex-basis: 16.666%;
+}
+.col.half {
+  width: 50%;
 }
 .icon {
   width: 15px;
@@ -280,4 +299,40 @@ nav > .nav-menu > a:hover {
   font-weight: lighter;
   letter-spacing: 0.5px;
   border-radius: 4px;
+}
+.grey {
+  color: grey;
+}
+.company-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.company-list > div {
+  flex: 1 0;
+  font-size: 20px;
+  white-space: nowrap;
+  padding: 10px;
+}
+.company-list > div > img {
+  width: 100px;
+}
+.person-list {
+  padding: 10px 0px;
+}
+.person-list > img {
+  width: 50px;
+  float: left;
+  margin-right: 10px;
+}
+.movie-page-div {
+  padding: 30;
+  padding-top: 0;
+  align-items: flex-start;
+}
+.back:before {
+  content: '⟨';
+  font-weight: bold;
+  display: inline-block;
+  padding-right: 10px;
 }
