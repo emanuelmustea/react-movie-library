@@ -86,7 +86,6 @@ export default class Carousel extends Component {
     const imgsElements = this.imgs.map((src, i) => <img src={src} key={i} />);
     const disabledClass = this.state.isSliding ? 'disabled' : '';
     const sliderLeftPosition = -1 * this.state.currentImageIndex * (this.carouselContainerWidth || 0);
-    console.log(sliderLeftPosition, this.state.currentImageIndex);
     return (
       <div className="carousel" ref={ref => (this.carouselElement = ref)}>
         <div className="slider" style={{ left: sliderLeftPosition, transitionDuration: sliderTransition }}>
