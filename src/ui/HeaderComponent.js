@@ -3,19 +3,8 @@ import { Link, withRouter } from 'react-router-dom';
 import SearchSuggestions from '../SearchSuggestionsComponent/SearchSuggestionsComponent';
 import MoviesService from '../api/moviesService';
 import logo from '../../public/img/brand.png';
+import { debounce } from '../helpers/helpers';
 import './ui.css';
-
-const DEFAULT_TIMEOUT = 200;
-
-const debounce = (action, debounceTimeOut = DEFAULT_TIMEOUT) => {
-  let timeout = null;
-  return (...args) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      action(...args);
-    }, debounceTimeOut);
-  };
-};
 
 class Header extends Component {
   constructor() {

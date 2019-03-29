@@ -325,3 +325,14 @@ nav > .nav-menu > a:hover {
   float: left;
   margin-right: 10px;
 }
+.movie-page-div {
+  padding: 30;
+  padding-top: 0;
+  align-items: flex-start;
+}
+.back:before {
+  content: '⟨';
+  font-weight: bold;
+  display: inline-block;
+  padding-right: 10px;
+}

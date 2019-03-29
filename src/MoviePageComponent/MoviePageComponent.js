@@ -4,16 +4,7 @@ import MoviesService from '../api/moviesService';
 import Carousel from '../carousel/Carousel';
 import CastingList from './CastingListComponent';
 import Loading from '../LoadingComponent/LoadingComponent';
-
-const imagePathToSrc = imagePath => `https://image.tmdb.org/t/p/w500/${imagePath}`;
-
-const formatDate = (givenDate, onlyYear = true) => {
-  const d = new Date(givenDate);
-  const month = d.toLocaleString('en', { month: 'long' });
-  const day = d.getDate();
-  const year = d.getFullYear();
-  return onlyYear ? year : `${month} ${day}, ${year}`;
-};
+import { formatDateFromString, imagePathToSrc, dateToYear } from '../helpers/helpers';
 
 class MoviePage extends Component {
   constructor() {
@@ -37,21 +28,20 @@ class MoviePage extends Component {
       </div>
     ));
     return (
-      <div className="row" style={{ padding: 30, paddingTop: 0, alignItems: 'flex-start' }}>
+      <div className="row movie-page-div">
         <div className="col three">
           <Carousel
             autoSlide={true}
-            slideAfter={3000}
+            slideAfter={6000}
             transitionDuration={1000}
-            imgs={[imagePathToSrc(poster_path), imagePathToSrc(backdrop_path), imagePathToSrc(poster_path)]}
-            auto
+            imgs={[imagePathToSrc(poster_path), imagePathToSrc(backdrop_path), imagePathToSrc(poster_path), imagePathToSrc(backdrop_path)]}
           />
         </div>
         <div className="col grow">
           <div className="card">
             <div className="card-head">
-              <button className="margin" onClick={this.props.history.goBack}>
-                ⟨ Go back
+              <button className="margin back" onClick={this.props.history.goBack}>
+                Go back
               </button>
               <button className="margin">Add to watchlist</button>
               {homepage && (
@@ -61,12 +51,12 @@ class MoviePage extends Component {
               )}
               <h1 className="no-margin">
                 <span>{title}</span>
-                <span className="grey lighter"> ({formatDate(release_date)})</span>
+                <span className="grey lighter"> ({dateToYear(release_date)})</span>
               </h1>
               <h3 className="no-margin">{tagline}</h3>
               <br />
               <span>
-                {genresList} | <strong>{formatDate(release_date, false)}</strong>
+                {genresList} | <strong>{formatDateFromString(release_date)}</strong>
               </span>
             </div>
             <div className="card-body">{overview}</div>

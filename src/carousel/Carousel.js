@@ -10,14 +10,11 @@ export default class Carousel extends Component {
     this.imgs = this.cloneImages(this.props.imgs);
   }
   autoSlideNextPhoto = () => {
-    console.log(this.props);
-    const { slideAfter } = this.props;
     if (!this.state.disableSliding) {
       this.nextPhoto();
     } else {
       this.setState({ disableSliding: false });
     }
-    setTimeout(this.autoSlideNextPhoto, slideAfter);
   };
   cloneImages(imgs) {
     const firstImage = imgs[0];
@@ -77,8 +74,11 @@ export default class Carousel extends Component {
     this.carouselContainerWidth = this.carouselElement.offsetWidth;
     this.setState({ currentImageIndex: 1 });
     if (this.props.autoSlide) {
-      setTimeout(this.autoSlideNextPhoto, this.props.slideAfter);
+      this.autoSliderInterval = setInterval(this.autoSlideNextPhoto, this.props.slideAfter);
     }
+  }
+  componentWillUnmount() {
+    clearInterval(this.autoSliderInterval);
   }
   render() {
     const { transitionDuration } = this.props;
@@ -86,6 +86,7 @@ export default class Carousel extends Component {
     const imgsElements = this.imgs.map((src, i) => <img src={src} key={i} />);
     const disabledClass = this.state.isSliding ? 'disabled' : '';
     const sliderLeftPosition = -1 * this.state.currentImageIndex * (this.carouselContainerWidth || 0);
+    console.log(sliderLeftPosition, this.state.currentImageIndex);
     return (
       <div className="carousel" ref={ref => (this.carouselElement = ref)}>
         <div className="slider" style={{ left: sliderLeftPosition, transitionDuration: sliderTransition }}>

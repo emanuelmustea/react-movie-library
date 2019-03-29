@@ -39,8 +39,7 @@ export default class ListAllMovies extends Component {
     const moviesCards = this.state.movies.map((movieData, index) => <MovieOverview key={index} movieData={movieData} className="col five" />);
     return (
       <div className="row" style={{ ...this.props.style }}>
-        {moviesCards}
-        {this.state.isLoading ? <LoadingCards /> : null}
+        {(this.state.isLoading && <LoadingCards />) || moviesCards}
       </div>
     );
   }
