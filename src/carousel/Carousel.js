@@ -52,14 +52,11 @@ export default class Carousel extends Component {
     const imagesCount = this.imgs.length;
     const currentImageIndex = direction === 'next' ? this.state.currentImageIndex + 1 : this.state.currentImageIndex - 1;
     const { transitionDuration } = this.props;
-
     this.setState({ currentImageIndex, isAnimating: true, disableSliding: true }, () => {
-      console.log('setting to', currentImageIndex);
       if (this.isTheLastImage(direction)) {
         setTimeout(() => {
           const currentImageIndex = direction === 'next' ? 1 : imagesCount - 1;
           this.setState({ currentImageIndex, isAnimating: false });
-          console.log('reset to ', currentImageIndex);
         }, transitionDuration);
       }
     });
