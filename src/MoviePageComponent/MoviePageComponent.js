@@ -20,7 +20,7 @@ class MoviePage extends Component {
   render() {
     if (this.state.hasError) return <h1 className="text-center">We found an error when processing your request</h1>;
     if (!this.state.data) return <Loading />;
-    const { title, overview, release_date, genres, poster_path, backdrop_path, tagline, homepage } = this.state.data.general;
+    const { title, overview, release_date, genres, poster_path, backdrop_path, tagline, homepage, vote_count, vote_average } = this.state.data.general;
     const genresList = genres.map(genre => genre.name).join(',');
     const production_companies = this.state.data.general.production_companies.map((company, index) => (
       <div key={index} className="company">
@@ -30,12 +30,7 @@ class MoviePage extends Component {
     return (
       <div className="row movie-page-div">
         <div className="col three">
-          <Carousel
-            autoSlide={true}
-            slideAfter={6000}
-            transitionDuration={1000}
-            imgs={[imagePathToSrc(poster_path), imagePathToSrc(backdrop_path), imagePathToSrc(poster_path), imagePathToSrc(backdrop_path)]}
-          />
+          <Carousel autoSlide={true} slideAfter={2000} transitionDuration={1000} imgs={[imagePathToSrc(poster_path), imagePathToSrc(backdrop_path)]} />
         </div>
         <div className="col grow">
           <div className="card">
@@ -50,6 +45,10 @@ class MoviePage extends Component {
                 </a>
               )}
               <h1 className="no-margin">
+                <div className="float-right margin lighter">
+                  <h1 className="center">{vote_average} / 10</h1>
+                  <strong>{vote_count}</strong> reviewed this movie
+                </div>
                 <span>{title}</span>
                 <span className="grey lighter"> ({dateToYear(release_date)})</span>
               </h1>
@@ -59,6 +58,7 @@ class MoviePage extends Component {
                 {genresList} | <strong>{formatDateFromString(release_date)}</strong>
               </span>
             </div>
+
             <div className="card-body">{overview}</div>
             <div className="card-body">
               <CastingList data={this.state.data.credits} />

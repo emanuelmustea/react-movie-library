@@ -336,3 +336,9 @@ nav > .nav-menu > a:hover {
   display: inline-block;
   padding-right: 10px;
 }
+.float-right {
+  float: right;
+}
+.center {
+  text-align: center;
+}

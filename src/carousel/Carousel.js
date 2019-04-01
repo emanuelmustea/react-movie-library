@@ -36,8 +36,8 @@ export default class Carousel extends Component {
     this.enableButtons();
   }
   isTheLastImage(direction) {
-    const imagesCount = this.props.imgs.length;
-    if (direction === 'next' && this.state.currentImageIndex >= imagesCount) {
+    const imagesCount = this.imgs.length;
+    if (direction === 'next' && this.state.currentImageIndex >= imagesCount - 1) {
       return true;
     } else if (direction === 'prev' && this.state.currentImageIndex <= 1) {
       return true;
@@ -49,18 +49,21 @@ export default class Carousel extends Component {
     if (this.state.isSliding) {
       return;
     }
-    const imagesCount = this.props.imgs.length;
+    const imagesCount = this.imgs.length;
     const currentImageIndex = direction === 'next' ? this.state.currentImageIndex + 1 : this.state.currentImageIndex - 1;
     const { transitionDuration } = this.props;
 
-    this.setState({ currentImageIndex, isAnimating: true, disableSliding: true });
+    this.setState({ currentImageIndex, isAnimating: true, disableSliding: true }, () => {
+      console.log('setting to', currentImageIndex);
+      if (this.isTheLastImage(direction)) {
+        setTimeout(() => {
+          const currentImageIndex = direction === 'next' ? 1 : imagesCount - 1;
+          this.setState({ currentImageIndex, isAnimating: false });
+          console.log('reset to ', currentImageIndex);
+        }, transitionDuration);
+      }
+    });
 
-    if (this.isTheLastImage(direction)) {
-      setTimeout(() => {
-        const currentImageIndex = direction === 'next' ? 1 : imagesCount;
-        this.setState({ currentImageIndex, isAnimating: false });
-      }, transitionDuration);
-    }
     this.disableButtons();
   }
 
