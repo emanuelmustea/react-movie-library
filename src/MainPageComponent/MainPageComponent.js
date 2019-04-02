@@ -6,15 +6,13 @@ import FiltersAside from '../FiltersAsideComponent/FiltersAsideComponent';
 export default class MainPage extends Component {
   constructor() {
     super();
-    this.state = { movies: [], currentPage: 1, filters: [], hasErrors: false, isLoading: true };
-    this.toggleGenre = this.toggleGenreInFilters.bind(this);
+    this.state = { movies: [], currentPage: 1, hasErrors: false, isLoading: true };
     this.loadMovies = this.loadMovies.bind(this);
   }
   loadMovies() {
     const limit = 20;
-    const genresString = this.state.filters.join(',');
     this.listMovies.setState({ isLoading: true });
-    MoviesService.getMoviesList(this.state.currentPage, limit, genresString)
+    MoviesService.getMoviesList(this.state.currentPage, limit)
       .then(res => {
         const movies = [...this.state.movies, ...res];
         this.listMovies.updateMovies({ movies, currentPage: this.state.currentPage });
@@ -29,17 +27,6 @@ export default class MainPage extends Component {
         this.setState({ hasErrors: true });
         this.listMovies.setState({ isLoading: false });
       });
-  }
-  toggleGenreInFilters(genre) {
-    const { filters } = this.state;
-    const indexOfGenre = filters.indexOf(genre);
-    if (indexOfGenre === -1) {
-      filters.push(genre);
-    } else {
-      filters.splice(indexOfGenre, 1);
-    }
-    this.setState({ filters, currentPage: 1, movies: [] });
-    this.loadMovies();
   }
   componentDidMount() {
     this.loadMovies();
