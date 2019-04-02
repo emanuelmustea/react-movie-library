@@ -21,7 +21,7 @@ export default class Carousel extends Component {
   }
   enableButtons() {
     const { transitionDuration } = this.props;
-    setTimeout(() => {
+    this.enableButtonsTimeout = setTimeout(() => {
       this.setState({
         isSliding: false
       });
@@ -53,7 +53,7 @@ export default class Carousel extends Component {
 
     this.setState({ currentImageIndex, isAnimating: true, disableSliding: true }, () => {
       if (this.isTheLastImage(direction)) {
-        setTimeout(() => {
+        this.lastImageTimeout = setTimeout(() => {
           const currentImageIndex = direction === 'next' ? 1 : imagesCount - 2;
           this.setState({ currentImageIndex, isAnimating: false });
         }, transitionDuration);
@@ -78,6 +78,8 @@ export default class Carousel extends Component {
   }
   componentWillUnmount() {
     clearInterval(this.autoSliderInterval);
+    clearTimeout(this.lastImageTimeout);
+    clearTimeout(this.enableButtonsTimeout);
   }
   render() {
     const { transitionDuration } = this.props;

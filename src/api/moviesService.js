@@ -1,8 +1,8 @@
 const API_URL = 'https://api.themoviedb.org/3';
 
 class MoviesService {
-  getMoviesList(page = 1) {
-    const url = `${API_URL}/discover/movie?api_key=9e72f98ad9d5c68503cf7a2b857f2b8e&language=en-US&page=${page}`;
+  getMoviesList(page = 1, genres = '') {
+    const url = `${API_URL}/discover/movie?api_key=9e72f98ad9d5c68503cf7a2b857f2b8e&language=en-US&page=${page}&with_genres=${genres}`;
     return fetch(url)
       .then(res => res.json())
       .then(res => res.results);

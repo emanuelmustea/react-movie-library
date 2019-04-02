@@ -5,39 +5,31 @@ import LoadingBars from '../LoadingComponent/LoadingBarsComponent';
 import '../ui/ui.css';
 import SingleFilterComponent from './SingleFilterComponent';
 
-export default class FiltersAside extends Component {
+class FiltersAside extends Component {
   constructor() {
     super();
     this.state = { genres: [] };
-    MoviesService.getGenresList().then(res => this.setState({ genres: res.genres }));
-    //   .then(res => console.log(this.state.genres));
   }
   buildGenresList() {
-    return this.state.genres.map(genre => {
-      const mapStateToProps = (state, ownProps) => {
-        return {
-          name: ownProps.name,
-          id: ownProps.id,
-          active: false // state.filters.find(filter => filter.id === ownProps.id).active
-        };
-      };
-      const mapDispatchToProps = (dispatch, ownProps) => {
-        return {
-          onFilterToggle: () => {
-            dispatch({
-              type: 'TOGGLE_FILTER',
-              id: ownProps.id
-            });
-          }
-        };
-      };
-      const ToggledSingleFilters = connect(
-        mapStateToProps,
-        mapDispatchToProps
-      )(SingleFilterComponent);
-
-      return <ToggledSingleFilters key={genre.id} id={genre.id} name={genre.name} />;
-    });
+    const { updateFilters } = this.props;
+    return this.state.genres.map(genre => <SingleFilterComponent onChange={updateFilters} key={genre.id} id={genre.id} name={genre.name} />);
+  }
+  componentDidMount() {
+    const { dispatch } = this.props;
+    // dispatch({
+    //   type: 'DELETE_FILTERS'
+    // });
+    MoviesService.getGenresList()
+      .then(res => {
+        this.setState({ genres: res.genres });
+        return res.genres;
+      })
+      .then(genres =>
+        dispatch({
+          type: 'ADD_FILTER',
+          value: genres.map(genre => ({ ...genre, active: false }))
+        })
+      );
   }
   render() {
     const genresList = this.buildGenresList();
@@ -54,3 +46,4 @@ export default class FiltersAside extends Component {
     );
   }
 }
+export default connect()(FiltersAside);
