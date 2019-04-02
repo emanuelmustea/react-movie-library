@@ -24,12 +24,14 @@ class FiltersAside extends Component {
         this.setState({ genres: res.genres });
         return res.genres;
       })
-      .then(genres =>
-        dispatch({
-          type: 'ADD_FILTER',
-          value: genres.map(genre => ({ ...genre, active: false }))
-        })
-      );
+      .then(genres => {
+        if (this.props.filters.length == 0) {
+          dispatch({
+            type: 'ADD_FILTER',
+            value: genres.map(genre => ({ ...genre, active: false }))
+          });
+        }
+      });
   }
   render() {
     const genresList = this.buildGenresList();
@@ -46,4 +48,8 @@ class FiltersAside extends Component {
     );
   }
 }
-export default connect()(FiltersAside);
+const mapStateToProps = state => ({
+  filters: state.filters
+});
+
+export default connect(mapStateToProps)(FiltersAside);

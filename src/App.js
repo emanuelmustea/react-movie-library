@@ -13,7 +13,11 @@ class App extends Component {
     return (
       <Fragment>
         <div style={{ paddingTop: 100 }}>
-          <MainPage state={this.props.state} />
+          <Switch>
+            <Route exact path="/" component={withRouter(MainPage)} />
+            <Route path="/search/:query" component={withRouter(SearchComponent)} />
+            <Route path="/movie/:id/:title" component={withRouter(MoviePage)} />
+          </Switch>
         </div>
         <Header />
       </Fragment>
@@ -21,8 +25,3 @@ class App extends Component {
   }
 }
 export default withRouter(connect()(App));
-/* <Switch>
-<Route exact path="/" component={withRouter(MainPage)} />
-<Route path="/search/:query" component={withRouter(SearchComponent)} />
-<Route path="/movie/:id/:title" component={withRouter(MoviePage)} />
-</Switch> */

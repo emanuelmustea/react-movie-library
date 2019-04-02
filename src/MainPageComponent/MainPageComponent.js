@@ -70,5 +70,4 @@ const mapStateToProps = state => ({
   filters: state.filters
 });
 
-// export default connect(mapStateToProps)(MainPage);
-export default MainPage;
+export default connect(mapStateToProps)(MainPage);
