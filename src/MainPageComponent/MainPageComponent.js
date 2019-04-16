@@ -44,8 +44,6 @@ class MainPage extends Component {
   }
   render() {
     const { hasErrors } = this.state;
-    console.log('main page component');
-    console.log(this.props.filters);
     return (
       <div className="flex row">
         <FiltersAside updateFilters={() => 1} />

@@ -1,28 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
 
-const mapStateToProps = (state, ownProps) => {
-  const filterObj = state.filters.find(filter => filter.id === ownProps.id);
-  if (!filterObj) return {};
-  return {
-    name: ownProps.name,
-    id: ownProps.id,
-    active: filterObj.active
-  };
-};
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    onFilterToggle: () => {
-      dispatch({
-        type: 'TOGGLE_FILTER',
-        id: ownProps.id
-      });
-    }
-  };
-};
-
-function SingleFilterComponent({ id, name, onFilterToggle, active }) {
-  console.log('re-rendering component');
+function SingleFilterComponent(props) {
+  const { id, name, active } = props.filterObj;
+  const { onFilterToggle } = props;
   return (
     <div>
       <label>
@@ -33,7 +13,4 @@ function SingleFilterComponent({ id, name, onFilterToggle, active }) {
     </div>
   );
 }
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SingleFilterComponent);
+export default SingleFilterComponent;

@@ -8,33 +8,33 @@ import SingleFilterComponent from './SingleFilterComponent';
 class FiltersAside extends Component {
   constructor() {
     super();
-    this.state = { genres: [] };
   }
-  buildGenresList() {
-    const { updateFilters } = this.props;
-    return this.state.genres.map(genre => <SingleFilterComponent onChange={updateFilters} key={genre.id} id={genre.id} name={genre.name} />);
+  toggleFilter(id){
+    this.props.onFilterToggle(id);
+  }
+  componentWillReceiveProps (nextprops){
+    console.log('recieved props', nextprops);
+  }
+  buildFilterList() {
+    const {filters} = this.props;
+    return filters.map(genre => <SingleFilterComponent key={genre.id} filterObj={genre} onFilterToggle={(id)=>this.toggleFilter(id)} />);
   }
   componentDidMount() {
-    const { dispatch } = this.props;
-    // dispatch({
-    //   type: 'DELETE_FILTERS'
-    // });
+    const { addFilters, deleteFilters } = this.props;
+    if (this.props.filters.length == 0) {
+
     MoviesService.getGenresList()
-      .then(res => {
-        this.setState({ genres: res.genres });
-        return res.genres;
-      })
-      .then(genres => {
-        if (this.props.filters.length == 0) {
-          dispatch({
-            type: 'ADD_FILTER',
-            value: genres.map(genre => ({ ...genre, active: false }))
-          });
-        }
+      .then(res => res.genres)
+      .then(filters => {
+          console.log('dad')
+          deleteFilters();
+          addFilters(filters);
       });
+    }
   }
+
   render() {
-    const genresList = this.buildGenresList();
+    const genresList = this.buildFilterList();
     return (
       <aside className="filters" style={{ padding: 30, paddingTop: 10, paddingRight: 0 }}>
         <div className="card">
@@ -51,5 +51,25 @@ class FiltersAside extends Component {
 const mapStateToProps = state => ({
   filters: state.filters
 });
-
-export default connect(mapStateToProps)(FiltersAside);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFilterToggle: (id) => {
+      dispatch({
+        type: 'TOGGLE_FILTER',
+        id: id
+      });
+    },
+    deleteFilters: () =>{
+      dispatch({
+        type: 'DELETE_FILTERS'
+      });
+    },
+    addFilters: (filters) =>{
+      dispatch({
+        type: 'ADD_FILTER',
+        value: filters.map(genre => ({ ...genre, active: false }))
+      });
+    }
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(FiltersAside);

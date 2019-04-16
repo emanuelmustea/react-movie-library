@@ -6,11 +6,13 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import MovieAppReducer from './redux/MovieApp';
 
+const store = createStore(MovieAppReducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+
 ReactDOM.render(
-  <BrowserRouter>
-    <Provider store={createStore(MovieAppReducer)}>
+  <Provider store={store}>
+    <BrowserRouter>
       <App />
-    </Provider>
-  </BrowserRouter>,
+    </BrowserRouter>
+  </Provider>,
   document.getElementById('root')
 );
