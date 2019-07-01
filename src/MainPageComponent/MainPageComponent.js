@@ -1,20 +1,28 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import MoviesService from '../api/moviesService';
 import ListAllMovies from '../ListAllMoviesComponent/ListAllMoviesComponent';
 import FiltersAside from '../FiltersAsideComponent/FiltersAsideComponent';
+import { debounce } from '../helpers/helpers';
 
-export default class MainPage extends Component {
+const buildGenresString = filters => {
+  const activeFilters = filters.filter(filter => filter.active);
+  const activeFiltersId = activeFilters.map(filter => filter.id);
+  const commaSeparatedIds = activeFiltersId.join(',');
+  return commaSeparatedIds;
+};
+
+class MainPage extends Component {
   constructor() {
     super();
-    this.state = { movies: [], currentPage: 1, filters: [], hasErrors: false, isLoading: true };
-    this.toggleGenre = this.toggleGenreInFilters.bind(this);
+    this.state = { movies: [], currentPage: 1, hasErrors: false, isLoading: true };
     this.loadMovies = this.loadMovies.bind(this);
   }
   loadMovies() {
-    const limit = 20;
-    const genresString = this.state.filters.join(',');
+    const { filters } = this.props;
+    const genresString = buildGenresString(filters);
     this.listMovies.setState({ isLoading: true });
-    MoviesService.getMoviesList(this.state.currentPage, limit, genresString)
+    MoviesService.getMoviesList(this.state.currentPage, genresString)
       .then(res => {
         const movies = [...this.state.movies, ...res];
         this.listMovies.updateMovies({ movies, currentPage: this.state.currentPage });
@@ -30,25 +38,15 @@ export default class MainPage extends Component {
         this.listMovies.setState({ isLoading: false });
       });
   }
-  toggleGenreInFilters(genre) {
-    const { filters } = this.state;
-    const indexOfGenre = filters.indexOf(genre);
-    if (indexOfGenre === -1) {
-      filters.push(genre);
-    } else {
-      filters.splice(indexOfGenre, 1);
-    }
-    this.setState({ filters, currentPage: 1, movies: [] });
-    this.loadMovies();
-  }
   componentDidMount() {
     this.loadMovies();
+    this.debounceMoviesUpdate = debounce(this.updateFilters, 500);
   }
   render() {
     const { hasErrors } = this.state;
     return (
       <div className="flex row">
-        <FiltersAside toggleGenre={genre => this.toggleGenreInFilters(genre)} />
+        <FiltersAside updateFilters={() => 1} />
         <ListAllMovies
           style={{ padding: 30, paddingTop: 0 }}
           ref={ref => (this.listMovies = ref)}
@@ -65,3 +63,9 @@ export default class MainPage extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  filters: state.filters
+});
+
+export default connect(mapStateToProps)(MainPage);

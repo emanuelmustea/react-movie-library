@@ -5,8 +5,6 @@ export default class Carousel extends Component {
   constructor(props) {
     super(props);
     this.state = { isSliding: false, isAnimating: false, currentImageIndex: 0, disableSliding: false };
-    this.prevPhoto = this.prevPhoto.bind(this);
-    this.nextPhoto = this.nextPhoto.bind(this);
     this.imgs = this.cloneImages(this.props.imgs);
   }
   autoSlideNextPhoto = () => {
@@ -23,7 +21,7 @@ export default class Carousel extends Component {
   }
   enableButtons() {
     const { transitionDuration } = this.props;
-    setTimeout(() => {
+    this.enableButtonsTimeout = setTimeout(() => {
       this.setState({
         isSliding: false
       });
@@ -54,12 +52,10 @@ export default class Carousel extends Component {
     const { transitionDuration } = this.props;
 
     this.setState({ currentImageIndex, isAnimating: true, disableSliding: true }, () => {
-      console.log('setting to', currentImageIndex);
       if (this.isTheLastImage(direction)) {
-        setTimeout(() => {
+        this.lastImageTimeout = setTimeout(() => {
           const currentImageIndex = direction === 'next' ? 1 : imagesCount - 2;
           this.setState({ currentImageIndex, isAnimating: false });
-          console.log('reset to ', currentImageIndex);
         }, transitionDuration);
       }
     });
@@ -67,12 +63,12 @@ export default class Carousel extends Component {
     this.disableButtons();
   }
 
-  nextPhoto() {
+  nextPhoto = () => {
     this.moveSliderContainer('next');
-  }
-  prevPhoto() {
+  };
+  prevPhoto = () => {
     this.moveSliderContainer('prev');
-  }
+  };
   componentDidMount() {
     this.carouselContainerWidth = this.carouselElement.offsetWidth;
     this.setState({ currentImageIndex: 1 });
@@ -82,6 +78,8 @@ export default class Carousel extends Component {
   }
   componentWillUnmount() {
     clearInterval(this.autoSliderInterval);
+    clearTimeout(this.lastImageTimeout);
+    clearTimeout(this.enableButtonsTimeout);
   }
   render() {
     const { transitionDuration } = this.props;

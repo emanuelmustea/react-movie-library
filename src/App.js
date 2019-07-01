@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Switch, Route, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import SearchComponent from './SearchComponent/SearchComponent';
 import MainPage from './MainPageComponent/MainPageComponent';
 import MoviePage from './MoviePageComponent/MoviePageComponent';
@@ -23,4 +24,4 @@ class App extends Component {
     );
   }
 }
-export default withRouter(App);
+export default withRouter(connect()(App));

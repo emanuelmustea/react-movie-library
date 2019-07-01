@@ -1,0 +1,12 @@
+{
+  "env": {
+    "browser": true
+  },
+  "extends": ["fortech", "eslint:recommended", "plugin:react/recommended"],
+  "rules": {
+    "quotes": [2, "single"],
+    "react/prop-types": 0,
+    "no-console": 0,
+    "eslint.autoFixOnSave": true
+  }
+}
